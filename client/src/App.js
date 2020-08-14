@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import CoinFlipContract from './contracts/CoinFlip.json';
 import CoinFlipAttackContract from './contracts/CoinFlipAttack.json';
 import getWeb3 from "./getWeb3";
+import assert from 'assert';
 
 import "./App.css";
 
@@ -27,6 +28,7 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
+      console.log(networkId);
 
       const deployedNetwork = CoinFlipContract.networks[networkId];
       // console.log(deployedNetwork);
@@ -35,8 +37,10 @@ class App extends Component {
         deployedNetwork && deployedNetwork.address,
       );
 
+      console.log(CoinFlipAttackContract);
+
       const deployedAttackNetwork = CoinFlipAttackContract.networks[networkId];
-      // console.log(deployedAttackNetwork);
+      console.log(deployedAttackNetwork);
       const coinFlipAttackInstance = new web3.eth.Contract(
         CoinFlipAttackContract.abi,
         deployedAttackNetwork && deployedAttackNetwork.address,
@@ -49,7 +53,7 @@ class App extends Component {
         accounts,
         coinFlipContract: coinFlipInstance,
         coinFlipAttackContract: coinFlipAttackInstance
-      }, this.runExample, this.flip);
+      }, this.runExample);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -61,7 +65,8 @@ class App extends Component {
 
   runExample = async () => {
     const {
-      // accounts,
+      accounts,
+      web3,
       coinFlipContract,
       coinFlipAttackContract } = this.state;
 
@@ -69,17 +74,23 @@ class App extends Component {
     // const someResponse = await coinFlipContract.methods.sendTest(34).send({ from: accounts[3] });
 
     // Get the value from the contract to prove it worked.
-    // console.log(coinFlipAttackContract._address);
+    // console.log(accounts);
+    // console.log(coinFlipAttackContract);
     // const coinFlipResponse = await coinFlipContract.methods.getAddress().call();
 
     // Set the attack
-    // coinFlipAttackContract.methods.setVictim(coinFlipContract._address).call();
+    // await coinFlipAttackContract.methods.setVictim(coinFlipContract._address).call();
 
-    // console.log(await coinFlipAttackContract.methods.testFlip(false).call());
+    console.log(coinFlipContract)
+    console.log(await coinFlipContract.methods.getAddress());
 
-    // const coinFlipAttackResponse = await coinFlipAttackContract.methods.testFlip(true).call();
+    for (let i = 0; i < 10; i++) {
+      await coinFlipAttackContract.methods.flip();
+    }
 
-    // console.log(coinFlipAttackResponse);
+    // let wins = await coinFlipContract.methods.consecutiveWins().call();
+    // assert.equal(parseInt(wins), 10);
+    // console.log(`Total wins: ${wins}`);
 
     // Update state with the result.
     this.setState({
@@ -92,22 +103,6 @@ class App extends Component {
     // console.log("attack: ", this.state.attack);
   };
 
-  flip = async (e) => {
-    e.preventDefault();
-
-    console.log(e.target.elements[0].value);
-    let tf = false;
-    if (e.target.elements[0].value === "t") {
-      tf = true;
-    }
-
-    // Set the attack
-    // coinFlipAttackContract.methods.setVictim(coinFlipContract._address).call();
-
-    console.log(await this.state.coinFlipContract.methods.flip(tf).call());
-    console.log(await this.state.coinFlipContract.methods.consecutiveWins().call());
-  }
-
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
@@ -116,10 +111,6 @@ class App extends Component {
       <div className="App">
         <h1>External account and contract owner address:</h1>
         {/* <p>{this.state.test}</p> */}
-        <form onSubmit={this.flip}>
-          <input type="text" />
-          <button>flip</button>
-        </form>
       </div>
     );
   }
