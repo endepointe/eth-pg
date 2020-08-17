@@ -2,7 +2,7 @@ let CoinFlip = artifacts.require('./CoinFlip.sol');
 let CoinFlipAttack = artifacts.require('./CoinFlipAttack.sol');
 // import assert from 'assert';
 
-module.exports = function (deployer) {
+module.exports = function (deployer, network, accounts) {
   deployer.deploy(CoinFlip);
   deployer.deploy(CoinFlipAttack);
   // await CoinFlipAttack.setVictim(CoinFlip.address);

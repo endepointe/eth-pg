@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.0;
+pragma solidity ^0.5.0;
 
 import "./SafeMath.sol";
 
@@ -21,7 +21,7 @@ contract CoinFlip {
         uint256 blockValue = uint256(blockhash(block.number.sub(1)));
 
         if (lastHash == blockValue) {
-            // revert();
+            revert();
         }
 
         lastHash = blockValue;
