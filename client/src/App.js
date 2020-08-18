@@ -52,15 +52,14 @@ class App extends Component {
 
       const coinFlipAttackInstance = new web3.eth.Contract(
         CoinFlipAttackContract.abi,
-        // '0xdCFe5Ce7D558c008AabA56920910F442B6DA4440',
         // {
         //   from: accounts[0],
         //   gas: 3000000,
         // },
-        // const coinFlipAttackInstance = new web3.eth.Contract(
-        // CoinFlipAttackContract.abi,
         deployedAttackNetwork && deployedAttackNetwork.address,
       );
+
+      console.log(coinFlipAttackInstance);
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
@@ -87,9 +86,6 @@ class App extends Component {
       coinFlipAttackContract } = this.state;
 
     // Set the attack
-    console.log(coinFlipAttackContract);
-
-    // console.log(coinFlipContract);
 
     // console.log(await coinFlipAttackContract.methods.hackFlip(true).send({ from: accounts[0] }));
 
@@ -101,7 +97,7 @@ class App extends Component {
     let attackResults = [];
 
     for (let i = 0; i < 10; i++) {
-      attackResults.push(await coinFlipAttackContract.methods.hackFlip(true).send({ from: accounts[0] }));
+      attackResults.push(await coinFlipAttackContract.methods.hackFlip().call());
     }
 
     console.log(attackResults);

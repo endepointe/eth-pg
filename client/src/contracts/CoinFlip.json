@@ -2542,10 +2542,16 @@
       "links": {},
       "address": "0x14B90adAc8d1Cbaa5A34E47Fa65264d20F323212",
       "transactionHash": "0x9f4114390d3a5d477f0b2698bcfb0a0b4690dc0b82dd7601dcd24fca339b1565"
+    },
+    "1597717715077": {
+      "events": {},
+      "links": {},
+      "address": "0x320d0DcC7C4996617dd9632505cCa5B53A6FdA4b",
+      "transactionHash": "0x2f99702cca20544cdb6c0d80ef19187e53b2e5cc9cb7fe3797ba4d2bd3245f8a"
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-17T17:00:28.260Z",
+  "updatedAt": "2020-08-18T02:44:16.650Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
